@@ -5,12 +5,19 @@ cmake_minimum_required(VERSION 3.20)
 project(OrbitalSimulation)
 
 # Source Files
-add_executable(main src/main.cpp)
+add_executable(main
+    src/main.cpp
+    src/body.cpp
+)
 
 # Searches for and ensures raylib headers are included
 # CMAKE_SOURCE_DIR = top-level folder (project root)
 target_include_directories(main PRIVATE
     ${CMAKE_SOURCE_DIR}/raylib/include
+)
+
+target_include_directories(main PRIVATE
+    ${CMAKE_SOURCE_DIR}/include
 )
 
 # Connects build to raylib's compiled libs
