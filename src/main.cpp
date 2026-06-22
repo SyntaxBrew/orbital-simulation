@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 #include "body.hpp"
 
@@ -55,7 +56,7 @@ int main() {
             for (Body& static_body: static_bodies) {
                 float dx = dynamic_body.position.x - static_body.position.x;
                 float dy = dynamic_body.position.y - static_body.position.y;
-                float distance = sqrtf(dx * dx + dy * dy);
+                float distance = std::fmax(sqrtf(dx * dx + dy * dy), 32);
     
                 float angle = atan2f(dy, dx);
                 float grav_force_magnitude = GRAV_CONST * (dynamic_body.mass * static_body.mass) / (distance * distance);
