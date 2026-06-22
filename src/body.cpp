@@ -6,11 +6,3 @@ Body::Body(float mass, Vector2 initialPosition, Vector2 initialVelocity) {
     this->position = initialPosition;
     this->velocity = initialVelocity;
 }
-
-void Body::update() {
-
-}
-
-void Body::draw() {
-    
-}

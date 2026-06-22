@@ -7,7 +7,4 @@ struct Body {
     Vector2 acceleration;
 
     Body(float mass, Vector2 initialPosition, Vector2 initialVelocity);
-
-    void update();
-    void draw();
 };
