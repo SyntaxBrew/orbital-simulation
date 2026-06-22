@@ -26,27 +26,28 @@ int main() {
     std::vector<Body> static_bodies{};
     std::vector<Body> dynamic_bodies{};
 
-    static_bodies.push_back(
-        Body(
-            10000.0f,
-            {WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2},
-            {0, 0}
-        )
-    );
-
-    dynamic_bodies.push_back(
-        Body(
-            100.0f,
-            {WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 + 256},
-            {197.642, 0}
-        )
-    );
-
     while (!WindowShouldClose()) {
-        BeginDrawing();
-        ClearBackground(BLACK);
-
         float deltaTime = GetFrameTime();
+
+        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+            dynamic_bodies.push_back(
+                Body(
+                    100.0f,
+                    GetMousePosition(),
+                    {197.642, 0}
+                )
+            );
+        }
+
+        if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)) {
+            static_bodies.push_back(
+                Body(
+                    10000.0f,
+                    GetMousePosition(),
+                    {0, 0}
+                )
+            );
+        }
 
         for (Body& dynamic_body: dynamic_bodies) {
             Vector2 total_acceleration{0, 0};
@@ -68,7 +69,9 @@ int main() {
             dynamic_body.position = Vector2Add(dynamic_body.position, Vector2Scale(dynamic_body.velocity, deltaTime));
         }
 
-           
+        BeginDrawing();
+        ClearBackground(BLACK);
+
         for (Body& body: static_bodies) {
             DrawCircle(body.position.x, body.position.y, 32, RED);
         }
