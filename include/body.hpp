@@ -7,7 +7,9 @@ struct Body {
     Vector2 velocity;
     Vector2 acceleration;
 
+    float radius;
     std::deque<Vector2> prev_positions;
+    bool is_destroyed;
 
     Body(float mass, Vector2 initialPosition, Vector2 initialVelocity);
 };
