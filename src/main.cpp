@@ -47,7 +47,7 @@ int main() {
     std::vector<Body> static_bodies{};
     std::vector<Body> dynamic_bodies{};
 
-    float current_velocity{200};
+    float current_velocity{0};
     float current_mass{100};
 
     int default_text_size = GuiGetStyle(DEFAULT, TEXT_SIZE);
@@ -92,7 +92,7 @@ int main() {
             std::to_string(current_mass).c_str(),
             &current_mass,
             50,
-            500
+            50000
         );
 
         for (Body& dynamic_body: dynamic_bodies) {
@@ -107,6 +107,23 @@ int main() {
                 }*/
                 total_acceleration = Vector2Add(total_acceleration, calculate_grav_acceleration(static_body, dynamic_body));
             } 
+
+            for (Body& other_dynamic_body: dynamic_bodies) {
+                if (&dynamic_body == &other_dynamic_body) continue;
+                if (other_dynamic_body.is_destroyed) continue;
+            
+                if (CheckCollisionCircles(dynamic_body.position, dynamic_body.radius, other_dynamic_body.position, other_dynamic_body.radius)) {
+        
+                    if (dynamic_body.mass <= other_dynamic_body.mass) {
+                        other_dynamic_body.mass += dynamic_body.mass;
+                        other_dynamic_body.radius = powf(other_dynamic_body.mass, 0.2) * 6;
+                        dynamic_body.is_destroyed = true;
+                        break;
+                    }
+                }
+
+                total_acceleration = Vector2Add(total_acceleration, calculate_grav_acceleration(other_dynamic_body, dynamic_body));
+            }
 
             if (dynamic_body.is_destroyed) {
                 continue;
