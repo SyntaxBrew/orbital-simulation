@@ -10,9 +10,9 @@
 const int WINDOW_WIDTH = 800;
 const int WINDOW_HEIGHT = 800;
 
-const float GRAV_CONST = 1000;
+const float GRAV_CONST = 768;
 
-const bool ARROWS_ENABLED = false;
+const bool ARROWS_ENABLED = true;
 const float ARROW_LENGTH = 64;
 const float ARROW_HEAD_LENGTH = 24;
 const float ARROW_HEAD_SIZE = 6;
@@ -82,7 +82,7 @@ int main() {
         ClearBackground(BLACK);
 
         for (Body& body: static_bodies) {
-            DrawCircle(body.position.x, body.position.y, 32, RED);
+            DrawCircle(body.position.x, body.position.y, powf(body.mass, 0.2) * 6, RED);
         }
       
         for (Body& body: dynamic_bodies) {
@@ -104,7 +104,6 @@ int main() {
                 );
             }
             
-
             for (int i = 1; i < body.prev_positions.size(); i++) {
                 Vector2 start_pos = body.prev_positions.at(i-1);
                 Vector2 end_pos = body.prev_positions.at(i);
@@ -113,7 +112,7 @@ int main() {
                 DrawLineEx(start_pos, end_pos, 2.0f, Fade(BLUE, alpha));
             }
             
-            DrawCircle(body.position.x, body.position.y, 16, GREEN);
+            DrawCircle(body.position.x, body.position.y, powf(body.mass, 0.2) * 6, GREEN);
         }
 
         EndDrawing();
