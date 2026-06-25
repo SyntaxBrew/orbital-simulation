@@ -12,4 +12,6 @@ struct Body {
     bool is_destroyed;
 
     Body(float mass, Vector2 initialPosition, Vector2 initialVelocity);
+
+    float calculate_radius();
 };
